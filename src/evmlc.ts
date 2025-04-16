@@ -24,6 +24,9 @@ import poaNomineeNew from './commands/poa-nominee-new';
 import poaNomineeVote from './commands/poa-nominee-vote';
 import poaWhitelist from './commands/poa-whitelist';
 
+import stake from './commands/poa-stake';
+import stakeList from './commands/poa-stake-list';
+
 import info from './commands/info';
 import transfer from './commands/transfer';
 import version from './commands/version';
@@ -64,7 +67,8 @@ const commands = [
 	poaEvicteeList,
 	poaEvicteeNew,
 	poaEvicteeVote,
-
+	stake,
+	stakeList,
 	version
 ];
 

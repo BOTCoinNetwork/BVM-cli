@@ -33,6 +33,9 @@ export { default as poaEvicteeList } from './commands/poa-evictee-list';
 export { default as poaEvicteeNew } from './commands/poa-evictee-new';
 export { default as poaEvicteeVote } from './commands/poa-evictee-vote';
 
+export { default as stake } from './commands/poa-stake'
+export { default as stakeList } from './commands/poa-stake-list'
+
 // other
 export { default as transfer } from './commands/transfer';
 export { default as info } from './commands/info';
