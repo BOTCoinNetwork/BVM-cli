@@ -112,7 +112,7 @@ class TransferCommand extends Command<Args> {
 
 		const u = this.args.options.value.toString().slice(-1) as IUnits;
 		if (!isLetter(u)) {
-			this.args.options.value = this.args.options.value + 'T';
+			this.args.options.value = this.args.options.value + 'BOC';
 		}
 	}
 

@@ -114,7 +114,7 @@ class AccountListCommand extends Command<Args> {
 						if (l[1].length > 4) {
 							l[1] = l[1].slice(0, 4);
 
-							balance = '~' + l.join('.') + 'T';
+							balance = '~' + l.join('.') + 'BOC';
 						}
 					}
 				}

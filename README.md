@@ -16,13 +16,13 @@ A Command Line Interface to interact with an [EVM-Lite](https://github.com/mosai
 You can easily install `evmlc` with NPM
 
 ```bash
-$ npm install -g evm-lite-cli
+$ npm install -g bvm-cli
 ```
 
 or with `yarn`
 
 ```bash
-$ yarn global add evm-lite-cli
+$ yarn global add bvm-cli
 ```
 
 ## Commands
