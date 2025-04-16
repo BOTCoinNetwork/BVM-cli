@@ -1,5 +1,5 @@
-import Vorpal from 'vorpal';
 import Node, { Contract } from 'evm-lite-core';
+import Vorpal from 'vorpal';
 import Session from '../core/Session';
 import Table from '../core/Table';
 import Command, { Arguments, TxOptions } from '../core/TxCommand';

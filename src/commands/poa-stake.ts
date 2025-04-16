@@ -1,10 +1,9 @@
+import Node, { Contract } from 'evm-lite-core';
+import { Currency } from 'evm-lite-utils';
 import Inquirer from 'inquirer';
 import Vorpal from 'vorpal';
-import Node, { Contract } from 'evm-lite-core';
-import utils from 'evm-lite-utils';
 import Session from '../core/Session';
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
-import utils, { Currency, IUnits } from 'evm-lite-utils';
 
 type Opts = TxOptions & {
     host: string;
