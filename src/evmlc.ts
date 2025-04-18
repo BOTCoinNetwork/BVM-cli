@@ -25,9 +25,8 @@ import poaNomineeVote from './commands/poa-nominee-vote';
 import poaWhitelist from './commands/poa-whitelist';
 
 import stake from './commands/poa-stake';
-import stakeList from './commands/poa-stake-list';
 import stakeCheck from './commands/poa-stake-check';
-import stakeWithdraw from './commands/poa-stake-withdraw';
+import stakeList from './commands/poa-stake-list';
 
 import info from './commands/info';
 import transfer from './commands/transfer';
@@ -72,7 +71,6 @@ const commands = [
 	stake,
 	stakeList,
 	stakeCheck,
-	stakeWithdraw,
 	
 	version
 ];

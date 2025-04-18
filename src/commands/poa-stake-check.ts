@@ -1,7 +1,7 @@
-import Inquirer from 'inquirer';
-import Vorpal from 'vorpal';
 import Node, { Contract } from 'evm-lite-core';
 import utils, { Currency } from 'evm-lite-utils';
+import Inquirer from 'inquirer';
+import Vorpal from 'vorpal';
 import Session from '../core/Session';
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
 
@@ -113,7 +113,7 @@ class StakeCheckCommand extends Command<Args> {
         if (this.args.options.json) {
             return JSON.stringify({
                 address: this.args.address,
-                stakeAmount: stakeAmount
+                stakeAmount
             });
         } else {
             return `Stake amount for ${this.args.address}: ${stakeAmount} BOC`;
