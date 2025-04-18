@@ -7,6 +7,8 @@ import Inquirer from 'inquirer';
 import Vorpal from 'vorpal';
 import color from '../core/color';
 import Session from '../core/Session';
+import Logs from '../poa/Logs';
+
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
 
 type Opts = TxOptions & {
@@ -177,16 +179,25 @@ class StakeCommand extends Command<Args> {
 
         this.debug('Sending transaction');
 
-        const response = await this.node!.sendTx(tx, this.account);
+        const receipt = await this.node!.sendTx(tx, this.account);
+
+        if (!receipt.logs.length) {
+			this.debug('Not stake - Gas or not stake');
+		}
+
+		this.debug('Parsing logs from receipt');
+		const logs = new Logs(receipt.logs);
+
+        color.yellow(JSON.stringify(logs, null, 2)); 
 
         if (this.args.options.json) { 
             return JSON.stringify({
-                txHash: response.transactionHash,
+                txHash: receipt.transactionHash,
                 value: this.args.value,
-                status: response.status
+                status: receipt.status
             });
         } else {
-            return `Successfully staked ${this.args.options.value} BOC. Transaction: ${response.transactionHash}`;
+            return `Successfully staked ${this.args.options.value} BOC. Transaction: ${receipt.transactionHash}`;
         }
     }
 }
