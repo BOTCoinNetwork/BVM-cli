@@ -27,6 +27,7 @@ import poaWhitelist from './commands/poa-whitelist';
 import stake from './commands/poa-stake';
 import stakeCheck from './commands/poa-stake-check';
 import stakeList from './commands/poa-stake-list';
+import stakWithdraw from './commands/poa-stake-withdraw';
 
 import info from './commands/info';
 import transfer from './commands/transfer';
@@ -71,6 +72,7 @@ const commands = [
 	stake,
 	stakeList,
 	stakeCheck,
+	stakWithdraw,
 	
 	version
 ];

@@ -33,6 +33,7 @@ interface ISchema extends IAbstractSchema {
 	stake(tx: ITransaction): Transaction;
 	stakerArray(tx: ITransaction): Transaction;
 	checkStake(tx: ITransaction, address: string): Transaction;
+	withdraw(tx: ITransaction, amount: string): Transaction;
 }
 
 export type WhitelistEntry = {
