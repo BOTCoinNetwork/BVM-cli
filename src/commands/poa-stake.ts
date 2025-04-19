@@ -150,9 +150,6 @@ class StakeCommand extends Command<Args> {
 
 		const contract = Contract.load(JSON.parse(poa.abi), poa.address);
 
-        color.yellow(
-            `from: ${ this.args.options.from }`
-        ); 
         // sanity check
         if (!this.account) {
             const keyfile = await this.datadir.getKeyfile(
@@ -162,13 +159,6 @@ class StakeCommand extends Command<Args> {
             this.account = Datadir.decrypt(keyfile, this.passphrase!);
         }
 
-        color.yellow(
-            `account: ${ this.account }`
-        );
-        
-        color.yellow(
-            `passphrase: ${ this.passphrase }`
-        );
         this.debug('Generating stake transaction'); 
         const tx = contract.methods.stake(
             {

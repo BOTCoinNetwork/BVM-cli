@@ -1,12 +1,13 @@
-import * as fs from 'fs';
 import Node, { Contract } from 'evm-lite-core';
 import Datadir from 'evm-lite-datadir';
 import utils, { Currency, IUnits } from 'evm-lite-utils';
+import * as fs from 'fs';
 import Inquirer from 'inquirer';
 import Vorpal from 'vorpal';
 import color from '../core/color';
 import Session from '../core/Session';
 import Logs from '../poa/Logs';
+
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
 
 type Opts = TxOptions & {
