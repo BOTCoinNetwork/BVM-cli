@@ -30,6 +30,9 @@ interface ISchema extends IAbstractSchema {
 	getNomineeCount(tx: ITransaction): Transaction;
 	getNomineeAddressFromIdx(tx: ITransaction, id: number): Transaction;
 	isNominee(tx: ITransaction, address: string): Transaction;
+	stake(tx: ITransaction): Transaction;
+	checkStakeList(tx: ITransaction): Transaction;
+	checkStake(tx: ITransaction, address: string): Transaction;
 }
 
 export type WhitelistEntry = {

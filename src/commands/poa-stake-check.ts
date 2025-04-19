@@ -107,8 +107,8 @@ class StakeCheckCommand extends Command<Args> {
 
         // Execute the call
         this.debug('Executing call');
-        const response = await this.node!.callTx<Currency>(tx);
-        const stakeAmount = response.format('T')
+        const response: any = await this.node!.callTx(tx);
+        const stakeAmount = response.toNumber()
 
         if (this.args.options.json) {
             return JSON.stringify({

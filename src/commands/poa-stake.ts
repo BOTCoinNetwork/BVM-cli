@@ -86,10 +86,10 @@ class StakeCommand extends Command<Args> {
                 message: 'Stake value (BOC): ',
                 name: 'value',
                 type: 'input',
-                validate: (input: string) => {
-                    const value = parseFloat(input);
-                    return value > 100000 || 'Must stake more than 100,000 BOC';
-                }
+                // validate: (input: string) => {
+                //     const value = parseFloat(input);
+                //     return value > 100000 || 'Must stake more than 100,000 BOC';
+                // }
             }
         ];
 
@@ -109,9 +109,9 @@ class StakeCommand extends Command<Args> {
 			throw Error('Provide `to` address and `value` to send');
 		}
 
-        if (parseFloat(this.args.options.value) <= 100000) {
-            throw Error('Invalid stake value. Must stake more than 100,000 BOC');
-        }
+        // if (parseFloat(this.args.options.value) <= 100000) {
+        //     throw Error('Invalid stake value. Must stake more than 100,000 BOC');
+        // }
         if (!this.account) {
 			if (!this.args.options.from) {
 				throw Error('No `from` moniker provided or set in config.');
@@ -150,6 +150,7 @@ class StakeCommand extends Command<Args> {
 		const poa = await this.node!.getPOA();
 
 		this.log.info('POA', poa.address);
+        this.log.info('POA abi', poa.abi);
 
 		const contract = Contract.load(JSON.parse(poa.abi), poa.address);
 
