@@ -73,27 +73,31 @@ class StakeListCommand extends Command<Args> {
 
         const contract = Contract.load(JSON.parse(poa.abi), poa.address);
 
-        this.debug('Calling checkStakeList');
-        const response = await contract.methods.checkStakeList({
+        this.debug('Calling stakerArray');
+        const tx = await contract.methods.getStakerArray({
             gas: this.args.options.gas,
             gasPrice: Number(this.args.options.gasPrice)
         });
 
-        const result = await this.node!.callTx<String>(response);
-        const stakeList = JSON.parse(result.toString());
+        const result = await this.node!.callTx<string>(tx);
 
-        if (!stakeList.addrs || !stakeList.addrs.length) {
+        this.log.info('Stake stakerArray', result);
+
+        const stakerArray = JSON.parse(result.toString());
+        this.log.info('stakeList result', stakerArray);
+
+        if (!stakerArray.addrs || !stakerArray.addrs.length) {
             return 'No stake records found';
         }
 
         const table = new Table(['Address', 'Stake Rate']);
 
-        for (const entry of stakeList.addrs) {
+        for (const entry of stakerArray.addrs) {
             table.push([entry.addr, entry.rate]);
         }
 
         if (this.args.options.json) {
-            return JSON.stringify(stakeList);
+            return JSON.stringify(stakerArray);
         } else {
             return table.toString();
         }

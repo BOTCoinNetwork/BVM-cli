@@ -31,7 +31,7 @@ interface ISchema extends IAbstractSchema {
 	getNomineeAddressFromIdx(tx: ITransaction, id: number): Transaction;
 	isNominee(tx: ITransaction, address: string): Transaction;
 	stake(tx: ITransaction): Transaction;
-	checkStakeList(tx: ITransaction): Transaction;
+	stakerArray(tx: ITransaction): Transaction;
 	checkStake(tx: ITransaction, address: string): Transaction;
 }
 
