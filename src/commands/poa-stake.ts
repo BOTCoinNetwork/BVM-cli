@@ -119,19 +119,15 @@ class StakeCommand extends Command<Args> {
 
 			if (!this.passphrase) {
 				if (!this.args.options.pwd) {
-					throw Error('Passphrase file path not provided.');
+					throw Error('--pwd file path not provided.');
 				}
 
 				if (!utils.exists(this.args.options.pwd)) {
-					throw Error(
-						'Passphrase file path provided does not exist.'
-					);
+					throw Error('--pwd file path provided does not exist.');
 				}
 
 				if (utils.isDirectory(this.args.options.pwd)) {
-					throw Error(
-						'Passphrase file path provided is a directory.'
-					);
+					throw Error('--pwd file path provided is a directory.');
 				}
 
 				this.passphrase = fs
@@ -155,7 +151,7 @@ class StakeCommand extends Command<Args> {
 		const contract = Contract.load(JSON.parse(poa.abi), poa.address);
 
         color.yellow(
-            `from: ${ this.args.options.from}`
+            `from: ${ this.args.options.from }`
         ); 
         // sanity check
         if (!this.account) {
@@ -166,13 +162,20 @@ class StakeCommand extends Command<Args> {
             this.account = Datadir.decrypt(keyfile, this.passphrase!);
         }
 
+        color.yellow(
+            `account: ${ this.account }`
+        );
+        
+        color.yellow(
+            `passphrase: ${ this.passphrase }`
+        );
         this.debug('Generating stake transaction'); 
         const tx = contract.methods.stake(
             {
-                from: this.account!.address,
+                from: this.account.address,
                 gas:  this.args.options.gas,
                 gasPrice: Number(this.args.options.gasPrice),
-                value: new Currency(this.args.options.value).format('T').slice(0, -1)
+                value: new Currency(this.args.options.value).format('a').slice(0, -1)
             }
         );
 
@@ -180,7 +183,7 @@ class StakeCommand extends Command<Args> {
 
         this.debug('Sending transaction');
 
-        const receipt = await this.node!.sendTx(tx, this.account);
+        const receipt: any = await this.node!.sendTx(tx, this.account);
 
         if (!receipt.logs.length) {
 			this.debug('Not stake - Gas or not stake');

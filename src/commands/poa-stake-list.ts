@@ -79,28 +79,29 @@ class StakeListCommand extends Command<Args> {
             gasPrice: Number(this.args.options.gasPrice)
         });
 
-        const result = await this.node!.callTx<string>(tx);
+        const result: any = await this.node!.callTx(tx);
 
-        this.log.info('Stake stakerArray', result);
+        this.log.info('Stake stakerArray','', result);
 
-        const stakerArray = JSON.parse(result.toString());
-        this.log.info('stakeList result', stakerArray);
+        // const stakerArray = JSON.parse(result.toString());
+        // this.log.info('stakeList result', stakerArray);
 
-        if (!stakerArray.addrs || !stakerArray.addrs.length) {
-            return 'No stake records found';
-        }
+        // if (!stakerArray.addrs || !stakerArray.addrs.length) {
+        //     return 'No stake records found';
+        // }
 
-        const table = new Table(['Address', 'Stake Rate']);
+        // const table = new Table(['Address', 'Stake Rate']);
 
-        for (const entry of stakerArray.addrs) {
-            table.push([entry.addr, entry.rate]);
-        }
+        // for (const entry of stakerArray.addrs) {
+        //     table.push([entry.addr, entry.rate]);
+        // }
 
-        if (this.args.options.json) {
-            return JSON.stringify(stakerArray);
-        } else {
-            return table.toString();
-        }
+        // if (this.args.options.json) {
+        //     return JSON.stringify(stakerArray);
+        // } else {
+        //     return table.toString();
+        // }
+        return ''
     }
 }
 
