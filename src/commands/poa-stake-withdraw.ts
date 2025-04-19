@@ -133,7 +133,6 @@ class StakeWithdrawCommand extends Command<Args> {
 
         const poa = await this.node!.getPOA();
         this.log.info('POA', poa.address);
-        this.log.info('POA abi', poa.abi);
 
         const contract = Contract.load(JSON.parse(poa.abi), poa.address);
 
@@ -148,14 +147,6 @@ class StakeWithdrawCommand extends Command<Args> {
 
             this.account = Datadir.decrypt(keyfile, this.passphrase!);
         }
-
-        color.yellow(
-            `account: ${this.account}`
-        );
-
-        color.yellow(
-            `passphrase: ${this.passphrase}`
-        );
 
         this.debug('Generating withdraw transaction');
         const tx = contract.methods.withdraw(
@@ -177,9 +168,9 @@ class StakeWithdrawCommand extends Command<Args> {
         }
 
         this.debug('Parsing logs from receipt');
-        const logs = new Logs(receipt.logs);
+        // const logs = new Logs(receipt.logs);
 
-        color.yellow(JSON.stringify(logs, null, 2));
+        // color.yellow(JSON.stringify(logs, null, 2));
 
         if (this.args.options.json) {
             return JSON.stringify({

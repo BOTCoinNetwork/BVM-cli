@@ -146,7 +146,6 @@ class StakeCommand extends Command<Args> {
 		const poa = await this.node!.getPOA();
 
 		this.log.info('POA', poa.address);
-        this.log.info('POA abi', poa.abi);
 
 		const contract = Contract.load(JSON.parse(poa.abi), poa.address);
 
