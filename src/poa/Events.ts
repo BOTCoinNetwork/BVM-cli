@@ -42,3 +42,8 @@ export type EvictionDecision = {
 	_noVotes: string;
 	_accepted: boolean;
 };
+
+export type Staked = {
+	_staker: string;
+	_amount: string;
+};

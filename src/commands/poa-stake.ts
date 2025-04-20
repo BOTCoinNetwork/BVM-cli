@@ -9,6 +9,8 @@ import color from '../core/color';
 import Session from '../core/Session';
 import Logs from '../poa/Logs';
 
+import { Staked } from '../poa/Events';
+
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
 
 type Opts = TxOptions & {
@@ -182,6 +184,12 @@ class StakeCommand extends Command<Args> {
 		const logs = new Logs(receipt.logs);
 
         color.yellow(JSON.stringify(logs, null, 2)); 
+
+        const EventsStaked = logs.find<Staked>('Staked');
+		if (!EventsStaked) {
+			throw Error('Oops! Staked fail ! `Staked` event not found.');
+		}
+
 
         if (this.args.options.json) { 
             return JSON.stringify({
