@@ -2,6 +2,7 @@ import Node, { Contract } from 'evm-lite-core';
 import Vorpal from 'vorpal';
 import Session from '../core/Session';
 import Table from '../core/Table';
+
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
 
 type Opts = TxOptions & {
@@ -83,25 +84,25 @@ class StakeListCommand extends Command<Args> {
 
         this.log.info('Stake stakerArray','', result);
 
-        // const stakerArray = JSON.parse(result.toString());
-        // this.log.info('stakeList result', stakerArray);
+        const jsonString = String(result);
+        
+        const stakerArray: string[] = jsonString.split(',');
 
-        // if (!stakerArray.addrs || !stakerArray.addrs.length) {
-        //     return 'No stake records found';
-        // }
+        if (!stakerArray.length) {
+            return 'No stake records found';
+        }
 
-        // const table = new Table(['Address', 'Stake Rate']);
+        const table = new Table(['Address', 'Stake Rate']);
 
-        // for (const entry of stakerArray.addrs) {
-        //     table.push([entry.addr, entry.rate]);
-        // }
+        for (const entry of stakerArray) {
+            table.push([entry, 0.000000000000000001]);
+        }
 
-        // if (this.args.options.json) {
-        //     return JSON.stringify(stakerArray);
-        // } else {
-        //     return table.toString();
-        // }
-        return ''
+        if (this.args.options.json) {
+            return JSON.stringify(stakerArray);
+        } else {
+            return table.toString();
+        }
     }
 }
 
