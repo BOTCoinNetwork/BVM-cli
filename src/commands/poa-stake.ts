@@ -182,12 +182,26 @@ class StakeCommand extends Command<Args> {
 
 		this.debug('Parsing logs from receipt');
 		const logs = new Logs(receipt.logs);
+        const evs = logs.filter<Staked>('Staked');
 
-        color.yellow(JSON.stringify(logs, null, 2)); 
+        color.yellow(JSON.stringify(logs, null, 2));
 
-        const EventsStaked = logs.find<Staked>('Staked');
-		if (!EventsStaked) {
-			throw Error('Oops! Staked fail ! `Staked` event not found.');
+        let evStaked: Staked | undefined;
+        const from_addr = this.account?.address
+        if (!evs.length) {
+			throw Error('Staked Fail, `Must stake >= 100000 BOC Or Must be whole tokens without decimals');
+		} else {
+			evStaked = evs.find(
+				e =>
+					utils.hexToString(e.staker.toLowerCase().trim()) ===
+					utils.hexToString(from_addr.toLowerCase().trim())
+			);
+		}
+
+		if (!evStaked) {
+			throw Error(
+				'Could not find corresponding `evStaked` event'
+			);
 		}
 
 
@@ -198,7 +212,8 @@ class StakeCommand extends Command<Args> {
                 status: receipt.status
             });
         } else {
-            return `Successfully staked ${this.args.options.value} BOC. Transaction: ${receipt.transactionHash}`;
+            const amout = (Number(evStaked.amount) / 1e18).toFixed(4)
+            return `Successfully staked ${amout} BOC. Transaction: ${receipt.transactionHash}`;
         }
     }
 }

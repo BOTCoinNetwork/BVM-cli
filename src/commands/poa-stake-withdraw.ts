@@ -9,6 +9,7 @@ import Session from '../core/Session';
 import Logs from '../poa/Logs';
 
 import Command, { Arguments, TxOptions } from '../core/TxCommand';
+import { Withdrawn } from '../poa/Events';
 
 type Opts = TxOptions & {
     interactive?: boolean;
@@ -168,9 +169,29 @@ class StakeWithdrawCommand extends Command<Args> {
         }
 
         this.debug('Parsing logs from receipt');
-        // const logs = new Logs(receipt.logs);
 
-        // color.yellow(JSON.stringify(logs, null, 2));
+        const logs = new Logs(receipt.logs);
+        const evs = logs.filter<Withdrawn>('Withdrawn');
+
+        color.yellow(JSON.stringify(logs, null, 2));
+
+        let evWithdrawn: Withdrawn | undefined;
+        const from_addr = this.account?.address
+        if (!evs.length) {
+			throw Error('Withdrawn Fail, `The balance after withdrawal is greater than 100,000, or all withdrawals are made ');
+		} else {
+			evWithdrawn = evs.find(
+				e =>
+					utils.hexToString(e.staker.toLowerCase().trim()) ===
+					utils.hexToString(from_addr.toLowerCase().trim())
+			);
+		}
+
+		if (!evWithdrawn) {
+			throw Error(
+				'Could not find corresponding `evWithdrawn` event'
+			);
+		}
 
         if (this.args.options.json) {
             return JSON.stringify({
@@ -179,7 +200,8 @@ class StakeWithdrawCommand extends Command<Args> {
                 status: receipt.status
             });
         } else {
-            return `Successfully withdrawn ${this.args.options.value} BOC. Transaction: ${receipt.transactionHash}`;
+            const amout = (Number(evWithdrawn.amount) / 1e18).toFixed(4)
+            return `Successfully withdrawn ${amout} BOC. Transaction: ${receipt.transactionHash}`;
         }
     }
 }

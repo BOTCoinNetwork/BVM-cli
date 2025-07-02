@@ -44,6 +44,11 @@ export type EvictionDecision = {
 };
 
 export type Staked = {
-	_staker: string;
-	_amount: string;
+	staker: string;
+	amount: string;
+};
+
+export type Withdrawn = {
+	staker: string;
+	amount: string;
 };
