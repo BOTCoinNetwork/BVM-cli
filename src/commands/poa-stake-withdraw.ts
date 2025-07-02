@@ -178,7 +178,7 @@ class StakeWithdrawCommand extends Command<Args> {
         let evWithdrawn: Withdrawn | undefined;
         const from_addr = this.account?.address
         if (!evs.length) {
-			throw Error('Withdrawn Fail, `The balance after withdrawal is greater than 100,000, or all withdrawals are made ');
+			throw Error('Withdrawn Fail, `The balance after withdrawal is greater than 210,000, or all withdrawals are made ');
 		} else {
 			evWithdrawn = evs.find(
 				e =>

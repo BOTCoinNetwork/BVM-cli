@@ -88,10 +88,6 @@ class StakeCommand extends Command<Args> {
                 message: 'Stake value (BOC): ',
                 name: 'value',
                 type: 'input',
-                // validate: (input: string) => {
-                //     const value = parseFloat(input);
-                //     return value > 100000 || 'Must stake more than 100,000 BOC';
-                // }
             }
         ];
 
@@ -111,9 +107,6 @@ class StakeCommand extends Command<Args> {
 			throw Error('Provide `to` address and `value` to send');
 		}
 
-        // if (parseFloat(this.args.options.value) <= 100000) {
-        //     throw Error('Invalid stake value. Must stake more than 100,000 BOC');
-        // }
         if (!this.account) {
 			if (!this.args.options.from) {
 				throw Error('No `from` moniker provided or set in config.');
@@ -189,7 +182,7 @@ class StakeCommand extends Command<Args> {
         let evStaked: Staked | undefined;
         const from_addr = this.account?.address
         if (!evs.length) {
-			throw Error('Staked Fail, `Must stake >= 100000 BOC Or Must be whole tokens without decimals');
+			throw Error('Staked Fail, `Must stake >= 210,000 BOC Or Must be whole tokens without decimals');
 		} else {
 			evStaked = evs.find(
 				e =>
