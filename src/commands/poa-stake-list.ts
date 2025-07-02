@@ -81,21 +81,33 @@ class StakeListCommand extends Command<Args> {
         });
 
         const result: any = await this.node!.callTx(tx);
-
-        this.log.info('Stake stakerArray','', result);
-
         const jsonString = String(result);
-        
         const stakerArray: string[] = jsonString.split(',');
 
         if (!stakerArray.length) {
             return 'No stake records found';
         }
 
-        const table = new Table(['Address', 'Stake Rate']);
+        const table = new Table(['Address', 'Amount', 'Rate']);
 
         for (const entry of stakerArray) {
-            table.push([entry, 0.000000000000000001]);
+            const stakeListTx = contract!.methods.getStakeList(
+				{
+					 gas: this.args.options.gas,
+            gasPrice: Number(this.args.options.gasPrice)
+				},
+				entry
+			);
+            // getStakeList(address _staker) public view returns (uint256, uint256) 
+			const stakeListResult = await this.node!.callTx<[string, string]>(stakeListTx);
+            if(stakeListResult.length === 2){
+                const amount = (Number(stakeListResult[0]) / 1e18).toFixed(4);
+                const rate = (Number(stakeListResult[1]) / 100).toFixed(2) + '%'; 
+                table.push([entry, amount, rate]);
+            }else{
+                 this.log.info("Fail,Stake Address", entry);
+                return "Fail,Stake Address"
+            }
         }
 
         if (this.args.options.json) {
